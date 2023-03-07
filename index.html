@@ -1,9 +1,143 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Event Charges Calculator</title>
+    <style>
+      body {
+        background-color: #f7cac9;
+        background-image: url("vinyl.png");
+        background-size: cover;
+      }
+
+      h1 {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        color: #ffffff;
+        padding-top: 50px;
+      }
+
+      form {
+        margin: auto;
+        width: 80%;
+        max-width: 600px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        margin-top: 50px;
+        margin-bottom: 50px;
+      }
+
+      input[type="text"],
+      input[type="date"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+      }
+
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        margin-top: 20px;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+
+      .total {
+        text-align: right;
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <h1>Event Charges Calculator</h1>
+    <form onsubmit="calculateCharges(); return false;">
+      <label for="eventName">Event Name:</label>
+      <input type="text" id="eventName" name="eventName" required />
+
+      <label for="eventDate">Event Date:</label>
+      <input type="date" id="eventDate" name="eventDate" required />
+
+      <label for="eventDuration">Event Duration (days):</label>
+      <input type="number" id="eventDuration" name="eventDuration" required />
+
+      <input type="submit" value="Calculate Charges" />
+
+      <table id="chargesTable">
+        <thead>
+          <tr>
+            <th>Event Name</th>
+            <th>Event Date</th>
+            <th>Event Duration</th>
+            <th>Charges</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <div class="total" id="totalCharges"></div>
+    </form>
+
+    <script>
+      function calculateCharges() {
+        // Get form inputs
+        var eventName = document.getElementById("eventName").value;
+        var eventDate = document.getElementById("eventDate").value;
+        var eventDuration = parseInt(
+          document.getElementById("eventDuration").value
+        );
+
+        // Calculate charges
+        var charges = eventDuration * 24 * 200;
+
+        // Display charges in table
+        var tableBody = document.querySelector("#chargesTable tbody");
+        var newRow = tableBody.insertRow(-1);
+        var nameCell = newRow.insertCell(0);
+        var dateCell = newRow.insertCell(1);
+        var durationCell = newRow.insertCell(2);
+        var chargesCell = newRow.insertCell(3);
+        nameCell.innerText = eventName;
+        dateCell.innerText = eventDate;
+        durationCell.innerText = eventDuration;
+        chargesCell.innerText = "$" + charges.toFixed(2);
+
+        // Display total charges
+        var totalCharges = document.getElementById("totalCharges");
+        totalCharges.innerText = "Total Charges: $" + charges.toFixed(2);
+      }
+    </script>
+  </body>
 </html>
